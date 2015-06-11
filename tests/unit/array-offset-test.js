@@ -160,3 +160,19 @@ QUnit.test('can unshift with no offset', function (assert) {
 	assert.equal(proxy.get('length'), 6, 'Shift 2 objects');
 	assert.deepEqual(proxy.toArray(), ['a', 'b', 'c', 'd', 'e', 'f'], 'Shift 2 objects');
 });
+
+QUnit.test('can unshift with offset', function (assert) {
+	var arr = Em.A(['d', 'e', 'f']);
+	var proxy = ArrayOffset.create({
+		content: arr,
+		offset: 3
+	});
+	assert.equal(proxy.get('length'), 0, 'Initial length');
+	assert.deepEqual(proxy.toArray(), [], 'Initial length');
+	arr.unshiftObject('c');
+	assert.equal(proxy.get('length'), 1, 'Shift 1 object');
+	assert.deepEqual(proxy.toArray(), ['f'], 'Shift 1 object');
+	arr.unshiftObjects(['a', 'b']);
+	assert.equal(proxy.get('length'), 3, 'Shift 2 objects');
+	assert.deepEqual(proxy.toArray(), ['d', 'e', 'f'], 'Shift 2 objects');
+});
