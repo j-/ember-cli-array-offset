@@ -9,6 +9,10 @@ QUnit.test('constructor exists', function (assert) {
 	assert.equal(typeof ArrayOffset, 'function', 'ArrayOffset is function');
 });
 
+QUnit.test('can be initialized without content', function (assert) {
+	assert.ok(ArrayOffset.create(), 'ArrayOffset is created without content');
+});
+
 QUnit.test('content is initialized', function (assert) {
 	var arr = Em.A(['a', 'b', 'c']);
 	var proxy = ArrayOffset.create({

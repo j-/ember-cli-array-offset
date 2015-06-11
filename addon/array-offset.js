@@ -5,6 +5,12 @@ var computed = Em.computed;
 var DEFAULT_OFFSET = 0;
 
 var ArrayOffset = Em.ArrayProxy.extend({
+	content: computed({
+		get: function () {
+			return Em.A();
+		}
+	}),
+
 	offset: computed({
 		get: function () {
 			return DEFAULT_OFFSET;
