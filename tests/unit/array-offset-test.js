@@ -23,3 +23,8 @@ QUnit.test('content is initialized', function (assert) {
 	assert.equal(proxy.get('length'), 3);
 	assert.equal(proxy.get('arrangedContent').join(''), 'abc');
 });
+
+QUnit.test('default offset', function (assert) {
+	var proxy = ArrayOffset.create();
+	assert.equal(proxy.get('offset'), 0, 'Default offset is zero');
+});
