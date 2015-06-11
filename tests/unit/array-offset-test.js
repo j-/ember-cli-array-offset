@@ -194,3 +194,22 @@ QUnit.test('can shift with no offset', function (assert) {
 	assert.equal(proxy.get('length'), 3, 'Shift third object');
 	assert.deepEqual(proxy.toArray(), ['d', 'e', 'f'], 'Shift third object');
 });
+
+QUnit.test('can shift with offset', function (assert) {
+	var arr = Em.A(['a', 'b', 'c', 'd', 'e', 'f']);
+	var proxy = ArrayOffset.create({
+		content: arr,
+		offset: 3
+	});
+	assert.equal(proxy.get('length'), 3, 'Initial length');
+	assert.deepEqual(proxy.toArray(), ['d', 'e', 'f'], 'Initial length');
+	assert.equal(arr.shiftObject(), 'a', 'Shift first object');
+	assert.equal(proxy.get('length'), 2, 'Shift first object');
+	assert.deepEqual(proxy.toArray(), ['e', 'f'], 'Shift first object');
+	assert.equal(arr.shiftObject(), 'b', 'Shift second object');
+	assert.equal(proxy.get('length'), 1, 'Shift second object');
+	assert.deepEqual(proxy.toArray(), ['f'], 'Shift second object');
+	assert.equal(arr.shiftObject(), 'c', 'Shift third object');
+	assert.equal(proxy.get('length'), 0, 'Shift third object');
+	assert.deepEqual(proxy.toArray(), [], 'Shift third object');
+});
