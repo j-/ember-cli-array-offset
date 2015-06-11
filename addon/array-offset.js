@@ -48,7 +48,7 @@ var ArrayOffset = Em.ArrayProxy.extend({
 	}),
 
 	// process items removed
-	contentArrayWillChange: function (arr, idx, removedCount, addedCount) {
+	contentArrayWillChange: function (arr, idx, removedCount/*, addedCount*/) {
 		var arrangedContent = this.get('arrangedContent');
 		var arrangedContentLength = this.get('arrangedContent.length');
 		var offset = this.get('offset');
