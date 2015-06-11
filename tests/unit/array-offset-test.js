@@ -92,3 +92,19 @@ QUnit.test('can push with no offset', function (assert) {
 	assert.equal(proxy.get('length'), 6, 'Pushed 2 objects');
 	assert.deepEqual(proxy.toArray(), ['a', 'b', 'c', 'd', 'e', 'f'], 'Pushed 2 objects');
 });
+
+QUnit.test('can push with offset', function (assert) {
+	var arr = Em.A(['a', 'b', 'c']);
+	var proxy = ArrayOffset.create({
+		content: arr,
+		offset: 3
+	});
+	assert.equal(proxy.get('length'), 0, 'Initial length');
+	assert.deepEqual(proxy.toArray(), [], 'Initial length');
+	arr.pushObject('d');
+	assert.equal(proxy.get('length'), 1, 'Pushed 1 object');
+	assert.deepEqual(proxy.toArray(), ['d'], 'Pushed 1 object');
+	arr.pushObjects(['e', 'f']);
+	assert.equal(proxy.get('length'), 3, 'Pushed 2 objects');
+	assert.deepEqual(proxy.toArray(), ['d', 'e', 'f'], 'Pushed 2 objects');
+});
