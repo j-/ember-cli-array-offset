@@ -70,19 +70,11 @@ var ArrayOffset = Em.ArrayProxy.extend({
 		if (addedCount <= 0) {
 			return;
 		}
-		var offset = this.get('offset');
 		var arrangedContent = this.get('arrangedContent');
-		var toAdd, start, diff;
-		if (idx + addedCount > offset) {
-			start = idx - offset;
-			toAdd = arr.slice(idx, idx + addedCount);
-			arrangedContent.replace(start, 0, toAdd);
-		}
-		else {
-			diff = offset - addedCount;
-			toAdd = arr.slice(offset, offset + diff + 1);
-			arrangedContent.replace(0, 0, toAdd);
-		}
+		var offset = this.get('offset');
+		var start = max(idx, offset);
+		var toAdd = arr.slice(start, start + addedCount);
+		arrangedContent.replace(max(idx - offset, 0), 0, toAdd);
 	}
 });
 
