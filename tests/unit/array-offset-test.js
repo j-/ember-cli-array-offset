@@ -145,3 +145,18 @@ QUnit.test('can pop with offset', function (assert) {
 	assert.equal(proxy.get('length'), 0, 'Nothing left to pop');
 	assert.deepEqual(proxy.toArray(), [], 'Nothing left to pop');
 });
+
+QUnit.test('can unshift with no offset', function (assert) {
+	var arr = Em.A(['d', 'e', 'f']);
+	var proxy = ArrayOffset.create({
+		content: arr
+	});
+	assert.equal(proxy.get('length'), 3, 'Initial length');
+	assert.deepEqual(proxy.toArray(), ['d', 'e', 'f'], 'Initial length');
+	arr.unshiftObject('c');
+	assert.equal(proxy.get('length'), 4, 'Shift 1 object');
+	assert.deepEqual(proxy.toArray(), ['c', 'd', 'e', 'f'], 'Shift 1 object');
+	arr.unshiftObjects(['a', 'b']);
+	assert.equal(proxy.get('length'), 6, 'Shift 2 objects');
+	assert.deepEqual(proxy.toArray(), ['a', 'b', 'c', 'd', 'e', 'f'], 'Shift 2 objects');
+});
