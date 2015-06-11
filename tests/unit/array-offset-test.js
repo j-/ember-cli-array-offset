@@ -21,7 +21,7 @@ QUnit.test('content is initialized', function (assert) {
 	assert.equal(proxy.get('arrangedContent.length'), 3);
 	assert.equal(proxy.get('content.length'), 3);
 	assert.equal(proxy.get('length'), 3);
-	assert.equal(proxy.get('arrangedContent').join(''), 'abc');
+	assert.deepEqual(proxy.toArray(), ['a', 'b', 'c']);
 });
 
 QUnit.test('default offset', function (assert) {
