@@ -108,3 +108,18 @@ QUnit.test('can push with offset', function (assert) {
 	assert.equal(proxy.get('length'), 3, 'Pushed 2 objects');
 	assert.deepEqual(proxy.toArray(), ['d', 'e', 'f'], 'Pushed 2 objects');
 });
+
+QUnit.test('can pop with no offset', function (assert) {
+	var arr = Em.A(['a', 'b', 'c']);
+	var proxy = ArrayOffset.create({
+		content: arr
+	});
+	assert.equal(proxy.get('length'), 3, 'Initial length');
+	assert.deepEqual(proxy.toArray(), ['a', 'b', 'c'], 'Initial length');
+	assert.equal(arr.popObject(), 'c', 'Can pop last object');
+	assert.equal(proxy.get('length'), 2, 'Popped last object');
+	assert.deepEqual(proxy.toArray(), ['a', 'b'], 'Popped last object');
+	assert.equal(arr.popObject(), 'b', 'Can pop next last object');
+	assert.equal(proxy.get('length'), 1, 'Popped next last object');
+	assert.deepEqual(proxy.toArray(), ['a'], 'Popped next last object');
+});
