@@ -231,3 +231,22 @@ QUnit.test('can replace with no offset', function (assert) {
 	assert.equal(proxy.get('length'), 2, 'Remove BCDE');
 	assert.deepEqual(proxy.toArray(), ['a', 'f'], 'Remove BCDE');
 });
+
+QUnit.test('can replace with offset', function (assert) {
+	var arr = Em.A(['a', 'b', 'x', 'y', 'z']);
+	var proxy = ArrayOffset.create({
+		content: arr,
+		offset: 3
+	});
+	assert.equal(proxy.get('length'), 2, 'Initial array');
+	assert.deepEqual(proxy.toArray(), ['y', 'z'], 'Initial array');
+	arr.replace(2, 0, ['c']);
+	assert.equal(proxy.get('length'), 3, 'Insert "c"');
+	assert.deepEqual(proxy.toArray(), ['x', 'y', 'z'], 'Insert "c"');
+	arr.replace(3, 3, ['d', 'e', 'f']);
+	assert.equal(proxy.get('length'), 3, 'Replace XYZ with DEF');
+	assert.deepEqual(proxy.toArray(), ['d', 'e', 'f'], 'Replace XYZ with DEF');
+	arr.replace(1, 4);
+	assert.equal(proxy.get('length'), 0, 'Remove BCDE');
+	assert.deepEqual(proxy.toArray(), [], 'Remove BCDE');
+});
