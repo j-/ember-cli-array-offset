@@ -61,9 +61,7 @@ var ArrayOffset = Em.ArrayProxy.extend({
 		var offset = this.get('offset');
 		var start = max(idx - offset, 0);
 		var end = min(arrangedContentLength - start, removedCount);
-		if (start < arrangedContentLength) {
-			arrangedContent.replace(start, end);
-		}
+		arrangedContent.replace(start, end);
 	},
 
 	// process items added
