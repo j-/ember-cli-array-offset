@@ -1,6 +1,7 @@
 import Em from 'ember';
 var get = Em.get;
 var computed = Em.computed;
+var min = Math.min, max = Math.max;
 
 var DEFAULT_OFFSET = 0;
 
@@ -17,7 +18,7 @@ var ArrayOffset = Em.ArrayProxy.extend({
 		},
 		set: function (name, offset, old) {
 			offset = Number(offset); // ensure offset is number
-			offset = Math.max(offset, 0); // do not allow negative offset
+			offset = max(offset, 0); // do not allow negative offset
 			if (old === undefined) {
 				// being set for first time, no need to update
 				return offset;
@@ -31,7 +32,7 @@ var ArrayOffset = Em.ArrayProxy.extend({
 			// offset added, remove items
 			if (diff > 0) {
 				var arrangedLength = get(arranged, 'length');
-				var removeCount = Math.min(diff, arrangedLength);
+				var removeCount = min(diff, arrangedLength);
 				arranged.replace(0, removeCount);
 			}
 			// offset removed, add items
@@ -58,8 +59,8 @@ var ArrayOffset = Em.ArrayProxy.extend({
 		var arrangedContent = this.get('arrangedContent');
 		var arrangedContentLength = this.get('arrangedContent.length');
 		var offset = this.get('offset');
-		var start = Math.max(idx - offset, 0);
-		var end = Math.min(arrangedContentLength - start, removedCount);
+		var start = max(idx - offset, 0);
+		var end = min(arrangedContentLength - start, removedCount);
 		if (start < arrangedContentLength) {
 			arrangedContent.replace(start, end);
 		}
