@@ -230,6 +230,18 @@ QUnit.test('can replace with no offset', function (assert) {
 	arr.replace(1, 4);
 	assert.equal(proxy.get('length'), 2, 'Remove BCDE');
 	assert.deepEqual(proxy.toArray(), ['a', 'f'], 'Remove BCDE');
+	arr.replace(0, 2);
+	assert.equal(proxy.get('length'), 0, 'Remove AF');
+	assert.deepEqual(proxy.toArray(), [], 'Remove AF');
+	arr.replace(0, 0, ['x', 'y', 'z']);
+	assert.equal(proxy.get('length'), 3, 'Insert XYZ');
+	assert.deepEqual(proxy.toArray(), ['x', 'y', 'z'], 'Insert XYZ');
+	arr.replace(0, 3, ['a', 'b', '1', '2', 'e', 'f']);
+	assert.equal(proxy.get('length'), 6, 'Replace XYZ with AB12EF');
+	assert.deepEqual(proxy.toArray(), ['a', 'b', '1', '2', 'e', 'f'], 'Replace XYZ with AB12EF');
+	arr.replace(2, 2, ['c', 'd']);
+	assert.equal(proxy.get('length'), 6, 'Replace 12 with CD');
+	assert.deepEqual(proxy.toArray(), ['a', 'b', 'c', 'd', 'e', 'f'], 'Replace 12 with CD');
 });
 
 QUnit.test('can replace with offset', function (assert) {
@@ -249,4 +261,16 @@ QUnit.test('can replace with offset', function (assert) {
 	arr.replace(1, 4);
 	assert.equal(proxy.get('length'), 0, 'Remove BCDE');
 	assert.deepEqual(proxy.toArray(), [], 'Remove BCDE');
+	arr.replace(0, 2);
+	assert.equal(proxy.get('length'), 0, 'Remove AF');
+	assert.deepEqual(proxy.toArray(), [], 'Remove AF');
+	arr.replace(0, 0, ['x', 'y', 'z']);
+	assert.equal(proxy.get('length'), 0, 'Insert XYZ');
+	assert.deepEqual(proxy.toArray(), [], 'Insert XYZ');
+	arr.replace(0, 3, ['a', 'b', '1', '2', 'e', 'f']);
+	assert.equal(proxy.get('length'), 3, 'Replace XYZ with AB12EF');
+	assert.deepEqual(proxy.toArray(), ['2', 'e', 'f'], 'Replace XYZ with AB12EF');
+	arr.replace(2, 2, ['c', 'd']);
+	assert.equal(proxy.get('length'), 3, 'Replace 12 with CD');
+	assert.deepEqual(proxy.toArray(), ['d', 'e', 'f'], 'Replace 12 with CD');
 });
