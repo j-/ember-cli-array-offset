@@ -123,3 +123,25 @@ QUnit.test('can pop with no offset', function (assert) {
 	assert.equal(proxy.get('length'), 1, 'Popped next last object');
 	assert.deepEqual(proxy.toArray(), ['a'], 'Popped next last object');
 });
+
+QUnit.test('can pop with offset', function (assert) {
+	var arr = Em.A(['a', 'b', 'c', 'd', 'e', 'f']);
+	var proxy = ArrayOffset.create({
+		content: arr,
+		offset: 3
+	});
+	assert.equal(proxy.get('length'), 3, 'Initial length');
+	assert.deepEqual(proxy.toArray(), ['d', 'e', 'f'], 'Initial length');
+	assert.equal(arr.popObject(), 'f', 'Can pop last object');
+	assert.equal(proxy.get('length'), 2, 'Popped last object');
+	assert.deepEqual(proxy.toArray(), ['d', 'e'], 'Popped last object');
+	assert.equal(arr.popObject(), 'e', 'Can pop next last object');
+	assert.equal(proxy.get('length'), 1, 'Popped next last object');
+	assert.deepEqual(proxy.toArray(), ['d'], 'Popped next last object');
+	assert.equal(arr.popObject(), 'd', 'Can pop final object');
+	assert.equal(proxy.get('length'), 0, 'Popped final object');
+	assert.deepEqual(proxy.toArray(), [], 'Popped final object');
+	assert.equal(arr.popObject(), 'c', 'Nothing left to pop');
+	assert.equal(proxy.get('length'), 0, 'Nothing left to pop');
+	assert.deepEqual(proxy.toArray(), [], 'Nothing left to pop');
+});
