@@ -39,6 +39,17 @@ QUnit.test('can be initialized with offset', function (assert) {
 	assert.deepEqual(proxy.toArray(), ['d', 'e', 'f']);
 });
 
+QUnit.test('offset cannot be negative', function (assert) {
+	var proxy = ArrayOffset.create({
+		offset: -1
+	});
+	assert.equal(proxy.get('offset'), 0, 'Initialized with -1 offset');
+	proxy.set('offset', -2);
+	assert.equal(proxy.get('offset'), 0, 'Offset property set to -2');
+	proxy.decrementProperty('offset');
+	assert.equal(proxy.get('offset'), 0, 'Offset property decremented');
+});
+
 QUnit.test('can update offset', function (assert) {
 	var arr = Em.A(['a', 'b', 'c', 'd', 'e', 'f']);
 	var proxy = ArrayOffset.create({
