@@ -38,3 +38,17 @@ QUnit.test('can be initialized with offset', function (assert) {
 	assert.equal(proxy.get('offset'), 3, 'Can set offset');
 	assert.deepEqual(proxy.toArray(), ['d', 'e', 'f']);
 });
+
+QUnit.test('can update offset', function (assert) {
+	var arr = Em.A(['a', 'b', 'c', 'd', 'e', 'f']);
+	var proxy = ArrayOffset.create({
+		content: arr
+	});
+	assert.equal(proxy.objectAt(0), 'a', 'Default offset');
+	proxy.set('offset', 1);
+	assert.equal(proxy.objectAt(0), 'b', 'Offset of 1');
+	proxy.set('offset', 5);
+	assert.equal(proxy.objectAt(0), 'f', 'Offset of 5');
+	proxy.set('offset', 6);
+	assert.equal(proxy.objectAt(0), undefined, 'Offset of content length');
+});
