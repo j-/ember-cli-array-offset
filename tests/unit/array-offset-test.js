@@ -28,3 +28,13 @@ QUnit.test('default offset', function (assert) {
 	var proxy = ArrayOffset.create();
 	assert.equal(proxy.get('offset'), 0, 'Default offset is zero');
 });
+
+QUnit.test('can be initialized with offset', function (assert) {
+	var arr = Em.A(['a', 'b', 'c', 'd', 'e', 'f']);
+	var proxy = ArrayOffset.create({
+		content: arr,
+		offset: 3
+	});
+	assert.equal(proxy.get('offset'), 3, 'Can set offset');
+	assert.deepEqual(proxy.toArray(), ['d', 'e', 'f']);
+});
