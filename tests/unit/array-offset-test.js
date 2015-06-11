@@ -213,3 +213,21 @@ QUnit.test('can shift with offset', function (assert) {
 	assert.equal(proxy.get('length'), 0, 'Shift third object');
 	assert.deepEqual(proxy.toArray(), [], 'Shift third object');
 });
+
+QUnit.test('can replace with no offset', function (assert) {
+	var arr = Em.A(['a', 'b', 'x', 'y', 'z']);
+	var proxy = ArrayOffset.create({
+		content: arr
+	});
+	assert.equal(proxy.get('length'), 5, 'Initial array');
+	assert.deepEqual(proxy.toArray(), ['a', 'b', 'x', 'y', 'z'], 'Initial array');
+	arr.replace(2, 0, ['c']);
+	assert.equal(proxy.get('length'), 6, 'Insert "c"');
+	assert.deepEqual(proxy.toArray(), ['a', 'b', 'c', 'x', 'y', 'z'], 'Insert "c"');
+	arr.replace(3, 3, ['d', 'e', 'f']);
+	assert.equal(proxy.get('length'), 6, 'Replace XYZ with DEF');
+	assert.deepEqual(proxy.toArray(), ['a', 'b', 'c', 'd', 'e', 'f'], 'Replace XYZ with DEF');
+	arr.replace(1, 4);
+	assert.equal(proxy.get('length'), 2, 'Remove BCDE');
+	assert.deepEqual(proxy.toArray(), ['a', 'f'], 'Remove BCDE');
+});
