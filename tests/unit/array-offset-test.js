@@ -52,3 +52,17 @@ QUnit.test('can update offset', function (assert) {
 	proxy.set('offset', 6);
 	assert.equal(proxy.objectAt(0), undefined, 'Offset of content length');
 });
+
+QUnit.test('length is updated', function (assert) {
+	var arr = Em.A(['a', 'b', 'c', 'd', 'e', 'f']);
+	var proxy = ArrayOffset.create({
+		content: arr
+	});
+	assert.equal(proxy.get('length'), 6, 'Default offset');
+	proxy.set('offset', 1);
+	assert.equal(proxy.get('length'), 5, 'Offset of 1');
+	proxy.set('offset', 5);
+	assert.equal(proxy.get('length'), 1, 'Offset of 5');
+	proxy.set('offset', 6);
+	assert.equal(proxy.get('length'), 0, 'Offset of content length');
+});
