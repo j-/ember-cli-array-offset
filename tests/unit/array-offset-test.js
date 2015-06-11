@@ -66,3 +66,18 @@ QUnit.test('length is updated', function (assert) {
 	proxy.set('offset', 6);
 	assert.equal(proxy.get('length'), 0, 'Offset of content length');
 });
+
+QUnit.test('can push with no offset', function (assert) {
+	var arr = Em.A(['a', 'b', 'c']);
+	var proxy = ArrayOffset.create({
+		content: arr
+	});
+	assert.equal(proxy.get('length'), 3, 'Initial length');
+	assert.deepEqual(proxy.toArray(), ['a', 'b', 'c'], 'Initial length');
+	arr.pushObject('d');
+	assert.equal(proxy.get('length'), 4, 'Pushed 1 object');
+	assert.deepEqual(proxy.toArray(), ['a', 'b', 'c', 'd'], 'Pushed 1 object');
+	arr.pushObjects(['e', 'f']);
+	assert.equal(proxy.get('length'), 6, 'Pushed 2 objects');
+	assert.deepEqual(proxy.toArray(), ['a', 'b', 'c', 'd', 'e', 'f'], 'Pushed 2 objects');
+});
