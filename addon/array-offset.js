@@ -56,16 +56,20 @@ var ArrayOffset = Em.ArrayProxy.extend({
 
 	// process items removed
 	contentArrayWillChange: function (arr, idx, removedCount/*, addedCount*/) {
+		if (removedCount <= 0) {
+			return;
+		}
 		var arrangedContent = this.get('arrangedContent');
-		var arrangedContentLength = this.get('arrangedContent.length');
 		var offset = this.get('offset');
 		var start = max(idx - offset, 0);
-		var end = min(arrangedContentLength - start, removedCount);
-		arrangedContent.replace(start, end);
+		arrangedContent.replace(start, removedCount);
 	},
 
 	// process items added
 	contentArrayDidChange: function (arr, idx, removedCount, addedCount) {
+		if (addedCount <= 0) {
+			return;
+		}
 		var offset = this.get('offset');
 		var arrangedContent = this.get('arrangedContent');
 		var toAdd, start, diff;
