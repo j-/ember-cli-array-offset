@@ -1,58 +1,52 @@
 import Em from 'ember';
-import computed from 'ember-new-computed';
 
+var computed = Em.computed;
 var get = Em.get;
 var min = Math.min, max = Math.max;
 
 var DEFAULT_OFFSET = 0;
 
 var ArrayOffset = Em.ArrayProxy.extend({
-	content: computed({
-		get: function () {
-			return Em.A();
-		}
+	content: computed(function () {
+		return Em.A();
 	}),
 
-	offset: computed({
-		get: function () {
+	offset: computed(function (name, offset, old) {
+		if (arguments.length <= 1) {
 			return DEFAULT_OFFSET;
-		},
-		set: function (name, offset, old) {
-			offset = Number(offset); // ensure offset is number
-			offset = max(offset, 0); // do not allow negative offset
-			if (old === undefined) {
-				// being set for first time, no need to update
-				return offset;
-			}
-			var diff = offset - old;
-			if (diff === 0) {
-				// no need to continue if no difference
-				return offset;
-			}
-			var arranged = this.get('arrangedContent');
-			// offset added, remove items
-			if (diff > 0) {
-				var arrangedLength = get(arranged, 'length');
-				var removeCount = min(diff, arrangedLength);
-				arranged.replace(0, removeCount);
-			}
-			// offset removed, add items
-			else {
-				var content = this.get('content');
-				var toAdd = content.slice(offset, old);
-				arranged.replace(0, 0, toAdd);
-			}
+		}
+		offset = Number(offset); // ensure offset is number
+		offset = max(offset, 0); // do not allow negative offset
+		if (old === undefined) {
+			// being set for first time, no need to update
 			return offset;
 		}
+		var diff = offset - old;
+		if (diff === 0) {
+			// no need to continue if no difference
+			return offset;
+		}
+		var arranged = this.get('arrangedContent');
+		// offset added, remove items
+		if (diff > 0) {
+			var arrangedLength = get(arranged, 'length');
+			var removeCount = min(diff, arrangedLength);
+			arranged.replace(0, removeCount);
+		}
+		// offset removed, add items
+		else {
+			var content = this.get('content');
+			var toAdd = content.slice(offset, old);
+			arranged.replace(0, 0, toAdd);
+		}
+		return offset;
 	}),
 
-	arrangedContent: computed('content', {
-		get: function () {
-			var content = this.get('content');
-			var offset = this.get('offset');
-			var slice = content.slice(offset);
-			return Em.A(slice);
-		}
+	arrangedContent: computed('content', function () {
+		var content = this.get('content');
+		var offset = this.get('offset');
+		var slice = content.slice(offset);
+		return Em.A(slice);
 	}),
 
 	// process items removed
