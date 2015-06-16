@@ -1,6 +1,7 @@
 import Em from 'ember';
+import computed from 'ember-new-computed';
+
 var get = Em.get;
-var computed = Em.computed;
 var min = Math.min, max = Math.max;
 
 var DEFAULT_OFFSET = 0;
